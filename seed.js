@@ -1,7 +1,7 @@
-const db = require('./db');
+const db = require("./db");
 
-const products = ['Notebook', 'Backpack', 'Desk Lamp', 'Headphones', 'Water Bottle', 'Keyboard'];
-const customers = ['Ana', 'Ben', 'Carla', 'Dan', 'Ella', 'Felix', 'Gina', 'Hugo'];
+const products = ["Notebook", "Backpack", "Desk Lamp", "Headphones", "Water Bottle", "Keyboard"];
+const customers = ["Ana", "Ben", "Carla", "Dan", "Ella", "Felix", "Gina", "Hugo"];
 
 function randomInt(min, max) {
   return Math.floor(Math.random() * (max - min + 1)) + min;

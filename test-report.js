@@ -1,4 +1,4 @@
-const { getReportData } = require('./report');
+const { getReportData } = require("./report");
 
 const data = getReportData();
 

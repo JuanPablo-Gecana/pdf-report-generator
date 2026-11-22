@@ -1,4 +1,4 @@
-const db = require('./db');
+const db = require("./db");
 
 function getReportData() {
     const totalOrders = db.prepare("SELECT COUNT(*) AS total FROM orders").get().total;
@@ -12,4 +12,8 @@ function getReportData() {
     return { totalOrders, totalRevenue, topProducts, ordersPerDay};
 }
 
-module.exports = { getReportData };
+function getAllOrders() {
+    return db.prepare("SELECT * FROM orders ORDER BY id").all();
+}
+
+module.exports = { getReportData, getAllOrders };
