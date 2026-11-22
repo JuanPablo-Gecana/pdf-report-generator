@@ -23,10 +23,7 @@ app.get("/reports/:id", (req, res) => {
         res.status(404).json({ error: "Report not found" });
     }
 
-    const created_at = row.created_at;
-    const id = row.id;
-    const file = row.file;
-    res.json({ id, created_at, file: `/reports/${row.id}/file` });
+    res.json({ id: row.id, created_at: row.created_at, file: `/reports/${row.id}/file` });
 });
 
 app.get("/reports/:id/file", (req, res) => {
@@ -48,6 +45,16 @@ app.post("/reports", async (req, res) => {
     const info = db.prepare("INSERT INTO reports (path, created_at) VALUES (?, ?)").run("", today());
     const id = Number(info.lastInsertRowid);
     const filePath = `reports/${id}.pdf`;
+
+    const { force } = req.body ?? {};
+
+    if (!force) {
+        const created_at = today();
+        const row = db.prepare("SELECT * FROM reports WHERE created_at = ? ORDER BY id DESC LIMIT 1").get(today());
+        if (row) {
+            return res.status(200).json({ id: row.id, file: `/reports/${row.id}/file` })
+        }
+    }
 
     try {
         const data = getReportData();
